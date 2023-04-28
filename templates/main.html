@@ -1,0 +1,56 @@
+{% extends "template.html" %}
+
+{% block title %}
+	<title>Welcome to IMES | Main</title>
+{% endblock %}
+
+{% block logout %}<li><a href="logout"><i class="fas fa-sign-out-alt"></i></a></li>{% endblock %}
+
+{% block body %}
+	<h3>Welcome, {{ session['username'] }}</h3>
+	<br><br>
+	<ul class="collection with-header">
+		<li class="collection-header"><h4>Grade {{ grade_level['grade_level_id'] }} Subjects</h4></li>
+		{% for data in datas %}
+		<li class="collection-item"><i class="fa fa-address-book"></i>&emsp;{{ data.subjects }}</li>
+		{% endfor %}
+	</ul>
+	<br>
+
+	<ul class="collapsible">
+		{% for k, v in d.items() %}
+		<li>
+			<div class="collapsible-header"><i class="fa fa-user"></i>{{ k }}</div>
+			<div class="collapsible-body">
+			{% for k1, v1 in v.items() %}
+			
+			<ul class="collapsible">
+				<li>
+					<div class="collapsible-header"><i class="fa fa-music"></i>Title: {{ k1 }}</div>
+					<div class="collapsible-body">
+						{% for k2, v2 in v1.items() %}
+						<div class="container center">
+							<br><br>
+							<p>
+								{% autoescape false %}
+									{{ v2|replace("   ", "<br><br>")|replace("  ", "<br>") }}
+								{% endautoescape %}
+							</p>
+						</div>
+						{% endfor %}
+					</div>
+				</li>
+			</ul>
+			{% endfor %}
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block script %}
+	<style type="text/css">
+		h5, sup, h3, div {
+			text-transform: capitalize;
+		}
+	</style>
+{% endblock %}

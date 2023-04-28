@@ -1,0 +1,36 @@
+{% extends "template.html" %}
+
+{% block title %}
+	<title>Welcome to IMES | Login</title>
+{% endblock %}
+
+{% block body %}
+	<br><br><br><br>
+	<div class="container pink" style="padding: 50px;">
+	<div class="container brown" style="padding: 10px;">
+	<div class="row">
+		<form class="col s12" method="POST" action="/">
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="username" type="text" name="username" class="validate">
+					<label for="username">Username</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="password" type="password" name="password" class="validate">
+					<label for="password">Password</label>
+				</div>
+			</div>
+			<div class="row">
+				<button type="submit" class="col s12 waves-effect waves-light btn">LOGIN <i class="fa fa-arrow-alt-circle-right"></i></button>
+			</div>
+		</form>
+		{% if error %}
+			<h5>INVALID CREDENTIALS!</h5>
+		{% endif %}
+	</div>
+	</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

@@ -1,0 +1,1330 @@
+{% extends "template.html" %}
+
+{% block title %}
+	<title>Welcome to IMES | Admin</title>
+{% endblock %}
+
+{% block logout %}<li><a href="logout"><i class="fas fa-sign-out-alt"></i></a></li>{% endblock %}
+
+{% block body %}
+	<h3>Welcome, Admin</h3>
+	<br><br>
+	<ul class="collapsible">
+		<li class="green">
+			<div class="collapsible-header green"><i class="fa fa-user"></i>STUDENTS</div>
+			<div class="collapsible-body">
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>First Name</th>
+							<th>Middle Name</th>
+							<th>Last Name</th>
+							<th>Email</th>
+							<th>Birthday</th>
+							<th>Grade Level</th>
+							<th>Username</th>
+							<th>Password</th>
+							<th>Options</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for student in students %}
+						<tr>
+							<td>{{ student.id }}</td>
+							<td>{{ student.first_name }}</td>
+							<td>{{ student.middle_name }}</td>
+							<td>{{ student.last_name }}</td>
+							<td>{{ student.email }}</td>
+							<td>{{ student.birthday }}</td>
+							<td>{{ student.grade_level }}</td>
+							<td>{{ student.username }}</td>
+							<td>{{ student.password }}</td>
+							<td>
+								<a href="#studEditModal" class="modal-trigger" onclick="studEditInfo('{{ student.id }}','{{ student.first_name }}','{{ student.middle_name }}','{{ student.last_name }}','{{ student.email }}','{{ student.birthday }}','{{ student.gl_id }}','{{ student.username }}','{{ student.password }}');">
+									<i class="fa fa-pencil-alt" style="color: blue"></i>
+								</a>
+								 | 
+								<a href="#studDeleteModal" class="modal-trigger" onclick="studDeleteModal('{{ student.id }}', '{{ student.first_name }} {{ student.middle_name }} {{ student.last_name }}')">
+									<i class="fa fa-trash-alt" style="color: red"></i>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</li>
+		<li class="purple">
+			<div class="collapsible-header purple"><i class="fa fa-music"></i>SUBJECT SONGS</div>
+			<div class="collapsible-body">
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 1</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 1' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 2</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 2' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 3</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 3' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 4</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 4' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 5</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 5' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 6</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 6' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 7</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 7' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 8</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 8' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 9</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 9' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 10</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 10' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 11</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 11' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12 orange">
+						<p class="category-title center">Grade 12</p>
+						<table>
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Genre</th>
+									<th>Lyrics</th>
+									<th>Options</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for song in subjectSongs %}
+								{% if song.grade_level == 'Grade 12' %}
+								{% set ly = song.lyrics|replace("'", "`")%}
+								<tr>
+									<td>{{ song.subject }}</td>
+									<td>{{ song.title }}</td>
+									<td>{{ song.artist_fullname }}</td>
+									<td>{{ song.genre }}</td>
+									<td>{{ ly }}</td>
+									<td>
+										<a href="#subjSongEditModal" class="modal-trigger" onclick="subjSongEditModal('{{ song.id }}', '{{ song.subject_id }}', '{{ song.song_id }}')">
+											<i class="fa fa-pencil-alt" style="color: blue"></i>
+										</a>
+										 | 
+										<a href="#subjSongDeleteModal" class="modal-trigger" onclick="subjSongDeleteModal('{{ song.id }}', '{{ song.subject }}')">
+											<i class="fa fa-trash-alt" style="color: red"></i>
+										</a>
+									</td>
+								</tr>
+								{% endif %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+	<ul class="collapsible">
+		<li class="purple">
+			<div class="collapsible-header purple"><i class="fa fa-music"></i>SONGS</div>
+			<div class="collapsible-body">
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Title</th>
+							<th>Artist</th>
+							<th>Genre</th>
+							<th>Lyrics</th>
+							<th>Options</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for song in songs %}
+						{% set ly = song.lyrics|replace("'", "`")%}
+						<tr>
+							<td>{{ song.id }}</td>
+							<td>{{ song.title }}</td>
+							<td>{{ song.artist_fullname }}</td>
+							<td>{{ song.genre }}</td>
+							<td>{{ ly }}</td>
+							<td>
+								<a href="#songEditModal" class="modal-trigger" onclick="songEditModal('{{ song.id }}', '{{ song.ly_id }}', '{{ song.title }}', '{{ song.artist_id }}', '{{ song.genre_id }}', '{{ ly }}')">
+									<i class="fa fa-pencil-alt" style="color: blue"></i>
+								</a>
+								 | 
+								<a href="#songDeleteModal" class="modal-trigger" onclick="songDeleteModal('{{ song.id }}', '{{ song.ly_id }}', '{{ song.title }}', '{{ song.artist_fullname }}')">
+									<i class="fa fa-trash-alt" style="color: red"></i>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</li>
+		<li class="blue">
+			<div class="collapsible-header blue"><i class="fa fa-users"></i>ARTISTS</div>
+			<div class="collapsible-body">
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>First Name</th>
+							<th>Middle Name</th>
+							<th>Last Name</th>
+							<th>Contact Number</th>
+							<th>Options</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for artist in artists %}
+						<tr>
+							<td>{{ artist.artist_id }}</td>
+							<td>{{ artist.f_name }}</td>
+							<td>{{ artist.m_name }}</td>
+							<td>{{ artist.l_name }}</td>
+							<td>{{ artist.contact_num }}</td>
+							<td>
+								<a href="#artistEditModal" class="modal-trigger" onclick="artistEditModal('{{ artist.artist_id }}', '{{ artist.f_name }}', '{{ artist.m_name }}', '{{ artist.l_name }}', '{{ artist.contact_num }}')">
+									<i class="fa fa-pencil-alt" style="color: blue"></i>
+								</a>
+								 | 
+								<a href="#artistDeleteModal" class="modal-trigger" onclick="artistDeleteModal('{{ artist.artist_id }}', '{{ artist.f_name }} {{ artist.l_name }}')">
+									<i class="fa fa-trash-alt" style="color: red"></i>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</li>
+		<li class="red">
+			<div class="collapsible-header red"><i class="fa fa-list"></i>GENRES</div>
+			<div class="collapsible-body">
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Genre</th>
+							<th>Options</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for genre in genres %}
+						<tr>
+							<td>{{ genre.genre_id }}</td>
+							<td>{{ genre.name }}</td>
+							<td>
+								<a href="#genreEditModal" class="modal-trigger" onclick="genreEditModal('{{ genre.genre_id }}', '{{ genre.name }}')">
+									<i class="fa fa-pencil-alt" style="color: blue"></i>
+								</a>
+								 | 
+								<a href="#genreDeleteModal" class="modal-trigger" onclick="genreDeleteModal('{{ genre.genre_id }}', '{{ genre.name }}')">
+									<i class="fa fa-trash-alt" style="color: red"></i>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</li>
+		<li class="green">
+			<div class="collapsible-header green"><i class="fa fa-book"></i>SUBJECTS</div>
+			<div class="collapsible-body">
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Subject</th>
+							<th>Options</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for subject in subjects %}
+						<tr>
+							<td>{{ subject.subject_id }}</td>
+							<td>{{ subject.subject }}</td>
+							<td>
+								<a href="#subjEditModal" class="modal-trigger" onclick="subjEditModal('{{ subject.subject_id }}', '{{ subject.subject }}')">
+									<i class="fa fa-pencil-alt" style="color: blue"></i>
+								</a>
+								 | 
+								<a href="#subjDeleteModal" class="modal-trigger" onclick="subjDeleteModal('{{ subject.subject_id }}', '{{ subject.subject }}')">
+									<i class="fa fa-trash-alt" style="color: red"></i>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</li>
+	</ul>
+
+	<div class="fixed-action-btn">
+		<a class="btn-floating btn-large red">
+			<i class="fa fa-plus"></i>
+		</a>
+		<ul>
+			<li>
+				<a href="#studAddModal" class="btn-floating tooltipped green modal-trigger" data-position="left" data-tooltip="STUDENT">
+					<i class="fa fa-user"></i>
+				</a>
+			</li>
+			<li>
+				<a href="#subjSongAddModal" class="btn-floating tooltipped purple modal-trigger" data-position="left" data-tooltip="SUBJECT SONG">
+					<i class="fa fa-music"></i>
+				</a>
+			</li>
+			<li>
+				<a href="#songAddModal" class="btn-floating tooltipped purple modal-trigger" data-position="left" data-tooltip="SONG">
+					<i class="fa fa-music"></i>
+				</a>
+			</li>
+			<li>
+				<a href="#artistAddModal" class="btn-floating tooltipped blue modal-trigger" data-position="left" data-tooltip="ARTIST">
+					<i class="fa fa-users"></i>
+				</a>
+			</li>
+			<li>
+				<a href="#genreAddModal" class="btn-floating tooltipped red modal-trigger" data-position="left" data-tooltip="GENRE">
+					<i class="fa fa-list"></i>
+				</a>
+			</li>
+			<li>
+				<a href="#subjAddModal" class="btn-floating tooltipped green modal-trigger" data-position="left" data-tooltip="SUBJECT">
+					<i class="fa fa-book"></i>
+				</a>
+			</li>
+		</ul>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<style type="text/css">
+		.category-title {
+			margin-top: 0px;
+			font-weight: bold;
+		}
+
+		td, name {
+			text-transform: capitalize;
+		}
+
+		hr {
+			margin-top: 0px;
+		}
+	</style>
+
+	<script type="text/javascript">
+		//STUDENT
+		function studEditInfo(id, fname, mname, lname, email, bday, grade, user, pass) {
+			$('#stud_id').val(id);
+			$('#stud_first_name').val(fname);
+			$('#stud_middle_name').val(mname);
+			$('#stud_last_name').val(lname);
+			$('#stud_email').val(email);
+			$('#stud_birthdate').val(bday);
+			$('#stud_grade').val(grade);
+			$('#stud_username').val(user);
+			$('#stud_password').val(pass);
+		}
+
+		function studDeleteModal(id, name) {
+			$('#del_stud_id').val(id);
+			$('#del_stud_name').html(name);
+		}
+
+
+
+		//SUBJECT SONG
+		function subjSongEditModal(gradeId, subjId, songId) {
+			$('#edit_gs_id').val(gradeId);
+			$('#subjSong_subject').val(subjId);
+			$('#subjSong_title').val(songId);
+		}
+
+		function subjSongDeleteModal(id, subject) {
+			$('#del_ss_id').val(id);
+			$('#del_subj_song_name').html(subject);
+		}
+
+
+
+		//SONG
+		function songEditModal(id, lyId, title, artist, genre, lyrics) {
+			$('#edit_song_id').val(id);
+			$('#edit_song_lyrics_id').val(lyId);
+			$('#song_title').val(title);
+			$('#song_artist').val(artist);
+			$('#song_genre').val(genre);
+			$('#song_lyrics').val(lyrics);
+		}
+
+		function songDeleteModal(id, lyId, title, artist) {
+			$('#del_song_id').val(id);
+			$('#del_lyrics_id').val(lyId);
+			$('#del_title').html(title);
+			$('#del_title_artist').html(artist);
+		}
+
+
+
+		//ARTIST
+		function artistEditModal(id, fname, mname, lname, num) {
+			$('#edit_artist_id').val(id);
+			$('#artist_f_name').val(fname);
+			$('#artist_m_name').val(mname);
+			$('#artist_l_name').val(lname);
+			$('#artist_num').val(num);
+		}
+
+		function artistDeleteModal(id, name) {
+			$('#del_artist_id').val(id);
+			$('#del_artist').html(name);
+		}
+
+
+
+		//GENRE
+		function genreEditModal(id, genre) {
+			$('#genre_name').val(genre);
+			$('#edit_genre_id').val(id);
+		}
+
+		function genreDeleteModal(id, genre) {
+			$('#del_genre_id').val(id);
+			$('#del_genre').html(genre);
+		}
+
+
+
+		//SUBJECT
+		function subjEditModal(id, subj) {
+			$('#edit_subj_id').val(id);
+			$('#subj_name').val(subj);
+		}
+
+		function subjDeleteModal(id, subj) {
+			$('#del_subj_id').val(id);
+			$('#del_subj').html(subj);
+		}
+	</script>
+{% endblock %}
+
+{% block modals %}
+	<!----------------------------------- STUDENTS ----------------------------------->
+	<div id="studAddModal" class="modal">
+		<form method="POST" action="addStudent">
+			<div class="modal-content">
+				<h4>Add Student Info</h4>
+				<div class="row">
+					<div class="input-field col s4">
+						<input id="add_stud_first_name" name="add_stud_first_name" type="text" class="validate" placeholder="First Name">
+						<label for="add_stud_first_name">First Name</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="add_stud_middle_name" name="add_stud_middle_name" type="text" class="validate" placeholder="Middle Name">
+						<label for="add_stud_middle_name">Middle Name</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="add_stud_last_name" name="add_stud_last_name" type="text" class="validate" placeholder="Last Name">
+						<label for="add_stud_last_name">Last Name</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="add_stud_email" name="add_stud_email" type="email" class="validate" placeholder="Email">
+						<label for="add_stud_email">Email</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="add_stud_birthdate" name="add_stud_birthdate" type="date" class="validate">
+						<label for="add_stud_birthdate">Birth Date</label>
+					</div>
+					<div class="input-field col s4">
+						<select id="add_stud_grade" name="add_stud_grade">
+							{% for gl in grade_level %}
+							<option value="{{ gl.grade_level_id }}">{{ gl.grade_level }}</option>
+							{% endfor %}
+						</select>
+						<label>Grade Level</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="add_stud_username" name="add_stud_username" type="text" class="validate" placeholder="Username">
+						<label for="add_stud_username">Username</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="add_stud_password" name="add_stud_password" type="text" class="validate" placeholder="Password">
+						<label for="add_stud_password">Password</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="modal-close waves-effect waves-green btn-flat">Add</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="studEditModal" class="modal">
+		<form method="POST" action="editStudent">
+			<div class="modal-content">
+				<h4>Edit Student Info</h4>
+				<div class="row">
+					<input type="hidden" id="stud_id" name="stud_id">
+					<div class="input-field col s4">
+						<input id="stud_first_name" name="stud_first_name" type="text" class="validate" placeholder="First Name">
+						<label for="stud_first_name">First Name</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="stud_middle_name" name="stud_middle_name" type="text" class="validate" placeholder="Middle Name">
+						<label for="stud_middle_name">Middle Name</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="stud_last_name" name="stud_last_name" type="text" class="validate" placeholder="Last Name">
+						<label for="stud_last_name">Last Name</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="stud_email" name="stud_email" type="text" class="validate" placeholder="Email">
+						<label for="stud_email">Email</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="stud_birthdate" name="stud_birthdate" type="date" class="validate">
+						<label for="stud_birthdate">Birth Date</label>
+					</div>
+					<div class="input-field col s4">
+						<select class="browser-default" id="stud_grade" name="stud_grade">
+							{% for gl in grade_level %}
+							<option value="{{ gl.grade_level_id }}">{{ gl.grade_level }}</option>
+							{% endfor %}
+						</select>
+						<hr>
+					</div>
+					<div class="input-field col s6">
+						<input id="stud_username" name="stud_username" type="text" class="validate" placeholder="Username">
+						<label for="stud_username">Username</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="stud_password" name="stud_password" type="text" class="validate" placeholder="Password">
+						<label for="stud_password">Password</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="modal-close waves-effect waves-green btn-flat">Update</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="studDeleteModal" class="modal">
+		<form method="POST" action="deleteStudent">
+			<div class="modal-content">
+				<h4>Delete Subject Info</h4>
+				<div class="row">
+					<input type="hidden" id="del_stud_id" name="del_stud_id">
+					<h5> Are you sure you want to delete (<name id="del_stud_name"></name>)? </h5>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+				<button type="submit" class="modal-close waves-effect waves-green btn-flat">Yes</button>
+			</div>
+		</form>
+	</div>
+
+
+
+	<!----------------------------------- SUBJECT SONG ----------------------------------->
+	<div id="subjSongAddModal" class="modal">
+		<form method="POST" action="addGradeSubject">
+			<div class="modal-content">
+				<h4>Add Grade Song Info</h4>
+				<div class="row">
+					<div class="input-field col s4">
+						<select id="add_subjSong_grade" name="add_subjSong_grade">
+							{% for gl in grade_level %}
+							<option value="{{ gl.grade_level_id }}">{{ gl.grade_level }}</option>
+							{% endfor %}
+						</select>
+						<label>Grade</label>
+					</div>
+					<div class="input-field col s4">
+						<select id="add_subjSong_subject" name="add_subjSong_subject">
+							{% for subject in subjects %}
+							<option value="{{ subject.subject_id }}">{{ subject.subject }}</option>
+							{% endfor %}
+						</select>
+						<label>Subject</label>
+					</div>
+					<div class="input-field col s4">
+						<select id="add_subjSong_title" name="add_subjSong_title">
+							{% for song in songs %}
+							<option value="{{ song.id }}">{{ song.title }}</option>
+							{% endfor %}
+						</select>
+						<label>Title</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="waves-effect waves-green btn-flat">Add</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="subjSongEditModal" class="modal">
+		<form method="POST" action="editGradeSubject">
+			<div class="modal-content">
+				<h4>Edit Grade Song Info</h4>
+				<div class="row">
+					<input type="hidden" id="edit_gs_id" name="edit_gs_id">
+					<div class="input-field col s6">
+						<select class="browser-default" id="subjSong_subject" name="subjSong_subject">
+							{% for subject in subjects %}
+							<option value="{{ subject.subject_id }}">{{ subject.subject }}</option>
+							{% endfor %}
+						</select>
+						<hr>
+					</div>
+					<div class="input-field col s6">
+						<select class="browser-default" id="subjSong_title" name="subjSong_title">
+							{% for song in songs %}
+							<option value="{{ song.id }}">{{ song.title }}</option>
+							{% endfor %}
+						</select>
+						<hr>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="waves-effect waves-green btn-flat">Update</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="subjSongDeleteModal" class="modal">
+		<form method="POST" action="deleteGradeSubject">
+			<div class="modal-content">
+				<h4>Delete Subject Info</h4>
+				<div class="row">
+					<input type="hidden" id="del_ss_id" name="del_ss_id">
+					<h5> Are you sure you want to delete (<name id="del_subj_song_name"></name>) subject ? </h5>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+				<button type="submit" class="modal-close waves-effect waves-green btn-flat">Yes</button>
+			</div>
+		</form>
+	</div>
+
+
+
+	<!----------------------------------- SONGS ----------------------------------->
+	<div id="songAddModal" class="modal">
+		<form method="POST" action="addSong">
+			<div class="modal-content">
+				<h4>Add Song Info</h4>
+				<div class="row">
+					<div class="input-field col s4">
+						<input id="add_song_title" name="add_song_title" type="text" class="validate" placeholder="Title">
+						<label for="add_song_title">Title</label>
+					</div>
+					<div class="input-field col s4">
+						<select id="add_song_artist" name="add_song_artist">
+							{% for artist in artists %}
+							<option value="{{ artist.id }}">{{ artist.artist_fullname }}</option>
+							{% endfor %}
+						</select>
+						<label>Artist</label>
+					</div>
+					<div class="input-field col s4">
+						<select id="add_song_genre" name="add_song_genre">
+							{% for genre in genres %}
+							<option value="{{ genre.genre_id }}">{{ genre.name }}</option>
+							{% endfor %}
+						</select>
+						<label>Genre</label>
+					</div>
+					<div class="input-field col s12">
+						<textarea id="add_song_lyrics" name="add_song_lyrics" class="materialize-textarea"></textarea>
+						<label for="add_song_lyrics">Lyrics</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="modal-close waves-effect waves-green btn-flat">Add</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="songEditModal" class="modal">
+		<form method="POST" action="editSong">
+			<div class="modal-content">
+				<h4>Edit Song Info</h4>
+				<div class="row">
+					<input type="hidden" id="edit_song_id" name="edit_song_id">
+					<input type="hidden" id="edit_song_lyrics_id" name="edit_song_lyrics_id">
+					<div class="input-field col s4">
+						<input id="song_title" name="song_title" type="text" class="validate" placeholder="Title">
+						<label for="song_title">Title</label>
+					</div>
+					<div class="input-field col s4">
+						<select class="browser-default" id="song_artist" name="song_artist">
+							{% for artist in artists %}
+							<option value="{{ artist.id }}">{{ artist.artist_fullname }}</option>
+							{% endfor %}
+						</select>
+						<hr>
+					</div>
+					<div class="input-field col s4">
+						<select class="browser-default" id="song_genre" name="song_genre">
+							{% for genre in genres %}
+							<option value="{{ genre.genre_id }}">{{ genre.name }}</option>
+							{% endfor %}
+						</select>
+						<hr>
+					</div>
+					<div class="input-field col s12">
+						<textarea id="song_lyrics" name="song_lyrics" class="materialize-textarea"></textarea>
+						<label for="song_lyrics">Lyrics</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="modal-close waves-effect waves-green btn-flat">Update</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="songDeleteModal" class="modal">
+		<form method="POST" action="deleteSong">
+			<div class="modal-content">
+				<h4>Delete Song Info</h4>
+				<div class="row">
+					<input type="hidden" id="del_song_id" name="del_song_id">
+					<input type="hidden" id="del_lyrics_id" name="del_lyrics_id">
+					<h5> Are you sure you want to delete (<name id="del_title"></name>) by <name id="del_title_artist"></name>?</h5>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+				<button type="submit" class="modal-close waves-effect waves-green btn-flat">Yes</button>
+			</div>
+		</form>
+	</div>
+
+
+
+	<!----------------------------------- ARTISTS ----------------------------------->
+	<div id="artistAddModal" class="modal">
+		<form method="POST" action="addArtist">
+			<div class="modal-content">
+				<h4>Add Artist Info</h4>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="add_artist_f_name" name="add_artist_f_name" type="text" class="validate" placeholder="First Name">
+						<label for="add_artist_f_name">First Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="add_artist_m_name" name="add_artist_m_name" type="text" class="validate" placeholder="Middle Name">
+						<label for="add_artist_m_name">Middle Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="add_artist_l_name" name="add_artist_l_name" type="text" class="validate" placeholder="Last Name">
+						<label for="add_artist_l_name">Last Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="add_artist_num" name="add_artist_num" type="text" class="validate" placeholder="Contact Number">
+						<label for="add_artist_num">Contact Number</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="waves-effect waves-green btn-flat">Add</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="artistEditModal" class="modal">
+		<form method="POST" action="editArtist">
+			<div class="modal-content">
+				<h4>Edit Artist Info</h4>
+				<div class="row">
+					<input type="hidden" id="edit_artist_id" name="edit_artist_id">
+					<div class="input-field col s6">
+						<input id="artist_f_name" name="artist_f_name" type="text" class="validate" placeholder="First Name">
+						<label for="artist_f_name">First Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="artist_m_name" name="artist_m_name" type="text" class="validate" placeholder="Middle Name">
+						<label for="artist_m_name">Middle Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="artist_l_name" name="artist_l_name" type="text" class="validate" placeholder="Last Name">
+						<label for="artist_l_name">Last Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="artist_num" name="artist_num" type="text" class="validate" placeholder="Contact Number">
+						<label for="artist_num">Contact Number</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="waves-effect waves-green btn-flat">Update</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="artistDeleteModal" class="modal">
+		<form method="POST" action="deleteArtist">
+			<div class="modal-content">
+				<h4>Delete Artist Info</h4>
+				<div class="row">
+					<input type="hidden" id="del_artist_id" name="del_artist_id">
+					<h5> Are you sure you want to delete (<name id="del_artist"></name>)?</h5>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+				<button type="submit" class="waves-effect waves-green btn-flat">Yes</button>
+			</div>
+		</form>
+	</div>
+
+
+
+	<!----------------------------------- GENRES ----------------------------------->
+	<div id="genreAddModal" class="modal">
+		<form method="POST" action="addGenre">
+			<div class="modal-content">
+				<h4>Add Genre Info</h4>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="add_genre_name" name="add_genre_name" type="text" class="validate" placeholder="Genre">
+						<label for="add_genre_name">Genre</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="waves-effect waves-green btn-flat">Add</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="genreEditModal" class="modal">
+		<form method="POST" action="editGenre">
+			<div class="modal-content">
+				<h4>Edit Genre Info</h4>
+				<div class="row">
+					<input type="hidden" id="edit_genre_id" name="edit_genre_id">
+					<div class="input-field col s12">
+						<input id="genre_name" name="genre_name" type="text" class="validate" placeholder="Genre">
+						<label for="genre_name">Genre</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="waves-effect waves-green btn-flat">Update</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="genreDeleteModal" class="modal">
+		<form method="POST" action="deleteGenre">
+			<div class="modal-content">
+				<h4>Delete Genre Info</h4>
+				<div class="row">
+					<input type="hidden" id="del_genre_id" name="del_genre_id">
+					<h5> Are you sure you want to delete (<name id="del_genre"></name>)?</h5>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+				<button type="submit" class="waves-effect waves-green btn-flat">Yes</button>
+			</div>
+		</form>
+	</div>
+
+
+
+	<!----------------------------------- SUBJECTS ----------------------------------->
+	<div id="subjAddModal" class="modal">
+		<form method="POST" action="addSubject">
+			<div class="modal-content">
+				<h4>Add Subject Info</h4>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="add_subj_name" name="add_subj_name" type="text" class="validate" placeholder="Subject">
+						<label for="add_subj_name">Subject</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="waves-effect waves-green btn-flat">Add</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="subjEditModal" class="modal">
+		<form method="POST" action="editSubject">
+			<div class="modal-content">
+				<h4>Edit Subject Info</h4>
+				<div class="row">
+					<input type="hidden" id="edit_subj_id" name="edit_subj_id">
+					<div class="input-field col s12">
+						<input id="subj_name" name="subj_name" type="text" class="validate" placeholder="Subject">
+						<label for="subj_name">Subject</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="waves-effect waves-green btn-flat">Update</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="subjDeleteModal" class="modal">
+		<form method="POST" action="deleteSubject">
+			<div class="modal-content">
+				<h4>Delete Subject Info</h4>
+				<div class="row">
+					<input type="hidden" id="del_subj_id" name="del_subj_id">
+					<h5> Are you sure you want to delete (<name id="del_subj"></name>)?</h5>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-close waves-effect waves-green btn-flat">No</a>
+				<button type="submit" class="waves-effect waves-green btn-flat">Yes</button>
+			</div>
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% block title %}{% endblock %}
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'fontawesome/css/all.css') }}">
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'materialize/css/materialize.min.css') }}"  media="screen,projection"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+	<body class="orange">
+		<nav>
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">&nbsp;Integrated Music Education System</a>
+				<ul id="nav-mobile" class="right">
+					{% block logout %}{% endblock %}
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
+			{% block body %}{% endblock %}
+		</div>
+		{% block modals %}{% endblock %}
+	</body>
+	<script src="{{ url_for('static', filename = 'jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename = 'materialize/js/materialize.min.js') }}"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.modal').modal();
+			$('select').formSelect();
+			$('.tooltipped').tooltip();
+			$('.collapsible').collapsible();
+			$('.fixed-action-btn').floatingActionButton();
+		});
+	</script>
+	{% block script %}{% endblock %}
+</html>
